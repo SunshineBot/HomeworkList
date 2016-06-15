@@ -27,7 +27,7 @@ Partial Class Form1
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.pierceItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.透明度ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Opacity2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem25 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem50 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem70 = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,7 +58,7 @@ Partial Class Form1
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pierceItem, Me.透明度ToolStripMenuItem, Me.hideToolStripMenuItem, Me.ToolStripSeparator1, Me.createServiceToolStripMenuItem, Me.deleteServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.closeToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pierceItem, Me.Opacity2ToolStripMenuItem, Me.hideToolStripMenuItem, Me.ToolStripSeparator1, Me.createServiceToolStripMenuItem, Me.deleteServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.closeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(161, 148)
         '
@@ -69,12 +69,12 @@ Partial Class Form1
         Me.pierceItem.Size = New System.Drawing.Size(160, 22)
         Me.pierceItem.Text = "鼠标穿透"
         '
-        '透明度ToolStripMenuItem
+        'Opacity2ToolStripMenuItem
         '
-        Me.透明度ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem25, Me.ToolStripMenuItem50, Me.ToolStripMenuItem70, Me.ToolStripMenuItem85, Me.ToolStripMenuItem100})
-        Me.透明度ToolStripMenuItem.Name = "透明度ToolStripMenuItem"
-        Me.透明度ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.透明度ToolStripMenuItem.Text = "透明度"
+        Me.Opacity2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem25, Me.ToolStripMenuItem50, Me.ToolStripMenuItem70, Me.ToolStripMenuItem85, Me.ToolStripMenuItem100})
+        Me.Opacity2ToolStripMenuItem.Name = "Opacity2ToolStripMenuItem"
+        Me.Opacity2ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.Opacity2ToolStripMenuItem.Text = "透明度"
         '
         'ToolStripMenuItem25
         '
@@ -147,7 +147,7 @@ Partial Class Form1
         Me.Label1.Enabled = False
         Me.Label1.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Label1.Location = New System.Drawing.Point(42, 15)
+        Me.Label1.Location = New System.Drawing.Point(100, 159)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(188, 17)
         Me.Label1.TabIndex = 0
@@ -158,7 +158,7 @@ Partial Class Form1
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.BackColor = System.Drawing.Color.Transparent
         Me.CheckBox1.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(19, 169)
+        Me.CheckBox1.Location = New System.Drawing.Point(1, 58)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(63, 21)
         Me.CheckBox1.TabIndex = 2
@@ -170,12 +170,11 @@ Partial Class Form1
         Me.TextBox2.BackColor = System.Drawing.Color.White
         Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox2.Font = New System.Drawing.Font("微软雅黑", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(14, 45)
+        Me.TextBox2.Location = New System.Drawing.Point(62, 15)
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ReadOnly = True
-        Me.TextBox2.Size = New System.Drawing.Size(200, 120)
-        Me.TextBox2.TabIndex = 3
+        Me.TextBox2.Size = New System.Drawing.Size(226, 141)
+        Me.TextBox2.TabIndex = 4
         Me.TextBox2.Visible = False
         '
         'txtLabel
@@ -183,10 +182,10 @@ Partial Class Form1
         Me.txtLabel.AutoSize = True
         Me.txtLabel.BackColor = System.Drawing.Color.Transparent
         Me.txtLabel.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.txtLabel.Location = New System.Drawing.Point(12, 45)
-        Me.txtLabel.MaximumSize = New System.Drawing.Size(200, 120)
+        Me.txtLabel.Location = New System.Drawing.Point(64, 17)
+        Me.txtLabel.MaximumSize = New System.Drawing.Size(240, 150)
         Me.txtLabel.Name = "txtLabel"
-        Me.txtLabel.Size = New System.Drawing.Size(191, 38)
+        Me.txtLabel.Size = New System.Drawing.Size(230, 38)
         Me.txtLabel.TabIndex = 4
         Me.txtLabel.Text = "点击输入便笺内容。看系统托盘图标！右键有惊喜~"
         '
@@ -194,10 +193,10 @@ Partial Class Form1
         '
         Me.pierceCheck.AutoSize = True
         Me.pierceCheck.BackColor = System.Drawing.Color.Transparent
-        Me.pierceCheck.Location = New System.Drawing.Point(105, 171)
+        Me.pierceCheck.Location = New System.Drawing.Point(1, 98)
         Me.pierceCheck.Name = "pierceCheck"
         Me.pierceCheck.Size = New System.Drawing.Size(48, 16)
-        Me.pierceCheck.TabIndex = 5
+        Me.pierceCheck.TabIndex = 3
         Me.pierceCheck.Text = "穿透"
         Me.pierceCheck.UseVisualStyleBackColor = False
         '
@@ -211,9 +210,9 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.BackgroundImage = Global.HomeworkList.My.Resources.Resources.yellow_2
-        Me.ClientSize = New System.Drawing.Size(230, 200)
+        Me.BackColor = System.Drawing.Color.White
+        Me.BackgroundImage = Global.HomeworkList.My.Resources.Resources.background_2_p
+        Me.ClientSize = New System.Drawing.Size(300, 185)
         Me.ControlBox = False
         Me.Controls.Add(Me.pierceCheck)
         Me.Controls.Add(Me.txtLabel)
@@ -221,6 +220,7 @@ Partial Class Form1
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.Opacity = 0.7R
         Me.ShowIcon = False
@@ -243,7 +243,7 @@ Partial Class Form1
     Friend WithEvents pierceCheck As System.Windows.Forms.CheckBox
     Friend WithEvents pierceItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents opacityToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents 透明度ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Opacity2ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem25 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem50 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem70 As System.Windows.Forms.ToolStripMenuItem

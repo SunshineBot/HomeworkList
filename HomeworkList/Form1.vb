@@ -11,6 +11,28 @@ Public Class Form1
 
     Private loading As Boolean
 
+    '用于单独调整窗体透明度（不调整控件透明度）
+    Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As Integer, ByVal crKey As Integer, ByVal bAlpha As Byte, ByVal dwFlags As Integer) As Integer
+    Private Const LWA_ALPHA = &H2
+    Private Const LWA_COLORKEY = &H1
+
+    'Private Sub Form_Load()
+    '    Dim rtn As Long, ctrol As Control
+    '    rtn = GetWindowLong(hwnd, GWL_EXSTYLE)
+    '    rtn = rtn Or WS_EX_TRANSPARENT
+    '    SetWindowLong(hwnd, GWL_EXSTYLE, rtn)
+    '    Me.Show()
+    '    DoEvents()
+    '    For Each ctrol In Me.Controls
+    '        ctrol.Refresh()
+    '    Next
+    '    'SetLayeredWindowAttributes hwnd, 0, 100, LWA_ALPHA   '100值可调，0-255之间，越小透明度越高
+    '    'SetLayeredWindowAttributes hwnd, RGB(0, 0, 0), 0, LWA_COLORKEY    '将窗体上的黑颜色去掉
+    'End Sub
+
+
+
+
     '用于窗体鼠标穿透
     Const GWL_EXSTYLE As Integer = (-20)
     Const WS_EX_LAYERED As Integer = &H80000
@@ -23,6 +45,47 @@ Public Class Form1
     ' 用于窗体移动
     Private bFormDragging As Boolean = False
     Private oPointClicked As Point
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        '设置窗体单独透明
+        'Dim rtn As Long, ctrol As Control
+        'rtn = GetWindowLong(Me.Handle, GWL_EXSTYLE)
+        'rtn = rtn Or WS_EX_TRANSPARENT
+        'SetWindowLong(Me.Handle, GWL_EXSTYLE, rtn)
+        'Me.Show()
+
+
+        loading = True
+        Dim fileDir As String
+        fileDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\HwList.txt"
+        If File.Exists(fileDir) Then
+            Dim readStream As New StreamReader(fileDir)
+            TextBox2.Text = readStream.ReadToEnd
+            txtLabel.Text = TextBox2.Text
+            readStream.Close()
+        End If
+        readSettings()
+        loading = False
+        If My.Application.CommandLineArgs.Count > 0 Then
+            For Each str As String In My.Application.CommandLineArgs
+                Select Case str
+                    Case "createService"
+                        createService(False)
+                    Case "deleteService"
+                        deleteService(False)
+                End Select
+            Next
+        End If
+
+        'SetLayeredWindowAttributes(Me.Handle, 0, 100, LWA_ALPHA)   '100值可调，0-255之间，越小透明度越高
+        'For Each ctrol In Me.Controls
+        '    ctrol.Refresh()
+        'Next
+        'SetLayeredWindowAttributes(CheckBox1.Handle, 0, 255, LWA_ALPHA)
+        'SetLayeredWindowAttributes(txtLabel.Handle, 0, 255, LWA_ALPHA)
+        'SetLayeredWindowAttributes(Me.Handle, RGB(0, 0, 0), 0, LWA_COLORKEY)    '将窗体上的黑颜色去掉
+
+    End Sub
 
     Private Sub Form1_Click(sender As Object, e As EventArgs) Handles Me.Click
         hideTextBox()
@@ -50,30 +113,6 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TextBox2.BackColor = System.Drawing.Color.Transparent
-        loading = True
-        Dim fileDir As String
-        fileDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\HwList.txt"
-        If File.Exists(fileDir) Then
-            Dim readStream As New StreamReader(fileDir)
-            TextBox2.Text = readStream.ReadToEnd
-            txtLabel.Text = TextBox2.Text
-            readStream.Close()
-        End If
-        readSettings()
-        loading = False
-        If My.Application.CommandLineArgs.Count > 0 Then
-            For Each str As String In My.Application.CommandLineArgs
-                Select Case str
-                    Case "createService"
-                        createService(False)
-                    Case "deleteService"
-                        deleteService(False)
-                End Select
-            Next
-        End If
-    End Sub
 
     Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         If Me.Opacity = 0 Then
@@ -91,13 +130,13 @@ Public Class Form1
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked And Not loading Then
-            showTextBox()
+        If CheckBox1.Checked Then
             TextBox2.ReadOnly = False
+            If Not loading Then showTextBox()
         Else
             TextBox2.ReadOnly = True
         End If
-        saveSettings()
+        If Not loading Then saveSettings()
     End Sub
 
     Private Sub TextBox2_LostFocus(sender As Object, e As EventArgs) Handles TextBox2.LostFocus
@@ -334,4 +373,5 @@ Public Class Form1
             End If
         End Try
     End Sub
+
 End Class

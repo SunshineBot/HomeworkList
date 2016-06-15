@@ -124,10 +124,16 @@
     <None Include="Resources\yellow.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\yellow_21.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\yellow_2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\yellow_21.png" />
+    <None Include="Resources\yellow_22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background_2_p.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
