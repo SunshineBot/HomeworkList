@@ -10,28 +10,12 @@ Public Class Form1
     Private opa As Double = 0.7
 
     Private loading As Boolean
+    Private admin As Boolean
 
     '用于单独调整窗体透明度（不调整控件透明度）
     Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hwnd As Integer, ByVal crKey As Integer, ByVal bAlpha As Byte, ByVal dwFlags As Integer) As Integer
     Private Const LWA_ALPHA = &H2
     Private Const LWA_COLORKEY = &H1
-
-    'Private Sub Form_Load()
-    '    Dim rtn As Long, ctrol As Control
-    '    rtn = GetWindowLong(hwnd, GWL_EXSTYLE)
-    '    rtn = rtn Or WS_EX_TRANSPARENT
-    '    SetWindowLong(hwnd, GWL_EXSTYLE, rtn)
-    '    Me.Show()
-    '    DoEvents()
-    '    For Each ctrol In Me.Controls
-    '        ctrol.Refresh()
-    '    Next
-    '    'SetLayeredWindowAttributes hwnd, 0, 100, LWA_ALPHA   '100值可调，0-255之间，越小透明度越高
-    '    'SetLayeredWindowAttributes hwnd, RGB(0, 0, 0), 0, LWA_COLORKEY    '将窗体上的黑颜色去掉
-    'End Sub
-
-
-
 
     '用于窗体鼠标穿透
     Const GWL_EXSTYLE As Integer = (-20)
@@ -67,12 +51,17 @@ Public Class Form1
         readSettings()
         loading = False
         If My.Application.CommandLineArgs.Count > 0 Then
+            admin = True
             For Each str As String In My.Application.CommandLineArgs
                 Select Case str
                     Case "createService"
-                        createService(False)
+                        createService()
                     Case "deleteService"
-                        deleteService(False)
+                        deleteService()
+                    Case "createStartup"
+                        createStartup()
+                    Case "deleteStartup"
+                        deleteStartup()
                 End Select
             Next
         End If
@@ -224,7 +213,8 @@ Public Class Form1
                 CheckBox1.Checked = True
             End If
         Else
-            createService(True)
+            Dim welcome As String = "欢迎使用狂拽酷炫吊炸天便笺!" + vbCrLf + "这儿提供了透明度调整，鼠标穿透，自启动等核心功能，配置和便笺内容都是热保存的，不必担心丢失=。=" + vbCrLf + "自启动建议使用开始菜单启动项，创建服务功能在一些系统上好像有点问题0.0" + vbCrLf + "目前仅知道Win10系统可以支持，不知道win8/8.1/7/Vista/XP的支持情况咋样，欢迎反馈= =有空就改改=_=" + vbCrLf + "配置文件在我的文档->文档里面" + vbCrLf + vbCrLf + "希望用的愉快~" + vbCrLf + vbCrLf + "by SunshineBot."
+            MsgBox(welcome, vbInformation + vbOKOnly, "欢迎使用")
         End If
     End Sub
 
@@ -319,7 +309,7 @@ Public Class Form1
     End Sub
 
     Private Sub createServiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles createServiceToolStripMenuItem.Click
-        createService(True)
+        createService()
     End Sub
 
     Private Sub runAsAdmin(arg As String)
@@ -331,7 +321,7 @@ Public Class Form1
         Application.Exit()
     End Sub
 
-    Private Sub createService(first As Boolean)
+    Private Sub createService()
         Try
             Dim ctrl As ServiceController = ServiceControllerExtension.CreateService(
                 "HwList",
@@ -341,7 +331,7 @@ Public Class Form1
             MsgBox("自启动服务注册成功！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
         Catch ex As SystemException
             If ex.Message = "拒绝访问。" Then
-                If first Then
+                If Not admin Then
                     runAsAdmin("createService")
                 Else
                     MsgBox("服务已存在或者是发生了一些奇怪的事情导致服务注册失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
@@ -354,24 +344,79 @@ Public Class Form1
     End Sub
 
     Private Sub deleteServiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles deleteServiceToolStripMenuItem.Click
-        deleteService(True)
+        deleteService()
     End Sub
 
-    Private Sub deleteService(first As Boolean)
+    Private Sub deleteService()
         Try
             Dim ctrl As Boolean = ServiceControllerExtension.DeleteService("HwList")
-            MsgBox("注销成功！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+            If ctrl Then
+                MsgBox("注销服务成功！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+            Else
+                MsgBox("注销服务失败，请关闭服务控制窗口或者其它相关窗口后重试！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+            End If
         Catch ex As Exception
             If ex.Message = "拒绝访问。" Then
-                If first Then
+                If Not admin Then
                     runAsAdmin("deleteService")
                 Else
-                    MsgBox("服务不存在或者是发生了一些奇怪的事情导致服务注销失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+                    MsgBox("服务已经被注销或者发生了一些奇怪的事情导致服务注销失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
                 End If
             Else
-                MsgBox("服务不存在或者是发生了一些奇怪的事情导致服务注销失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+                MsgBox("服务已经被注销或者发生了一些奇怪的事情导致服务注销失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
             End If
         End Try
     End Sub
 
+    Private Sub createStartupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles createStartupToolStripMenuItem.Click
+        createStartup()
+    End Sub
+
+    Private Sub createStartup()
+        Try
+            ' 直接调用COM对象
+            Dim wsh As Object = CreateObject("WScript.Shell")
+            Dim startup As String = wsh.SpecialFolders("AllUsersStartup")
+            Dim lnk As Object = wsh.CreateShortcut(startup & "\便笺.lnk")
+
+            With lnk
+                '.Arguments = "/?" '传递参数
+                .Description = "我是直接调用COM创建的非托管对象创建的快捷方式！"
+                '.Ic '调用dll资源内的图标，索引在第23个图标，问号帮助
+                .TargetPath = Application.StartupPath & "\HomeworkList.exe"
+                .WindowStyle = vbNormalNoFocus '打开窗体的风格，正常无焦点
+                .WorkingDirectory = Application.StartupPath '工作路径
+
+                .Save() '保存快捷方式
+            End With
+
+            MsgBox("创建开始菜单启动项成功！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+        Catch ex As Exception
+            If Not admin Then
+                runAsAdmin("createStartup")
+            Else
+                MsgBox("创建开始菜单启动项失败。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+            End If
+        End Try
+    End Sub
+
+    Private Sub deleteStartup()
+        Try
+            ' 直接调用COM对象
+            Dim wsh As Object = CreateObject("WScript.Shell")
+            Dim startup As String = wsh.SpecialFolders("AllUsersStartup")
+            Kill(startup & "\便笺.lnk")
+            MsgBox("删除开始菜单启动项成功。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+        Catch ex As Exception
+            If Not admin Then
+                runAsAdmin("deleteStartup")
+            Else
+                MsgBox("删除开始菜单启动项失败，请自行删除。", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
+            End If
+        End Try
+    End Sub
+
+    Private Sub deleteStartupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles deleteStartupToolStripMenuItem.Click
+        deleteStartup()
+    End Sub
 End Class

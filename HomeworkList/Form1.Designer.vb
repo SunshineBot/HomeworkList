@@ -45,6 +45,9 @@ Partial Class Form1
         Me.txtLabel = New System.Windows.Forms.Label()
         Me.pierceCheck = New System.Windows.Forms.CheckBox()
         Me.opacityToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.createStartupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.deleteStartupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -58,22 +61,22 @@ Partial Class Form1
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pierceItem, Me.Opacity2ToolStripMenuItem, Me.hideToolStripMenuItem, Me.ToolStripSeparator1, Me.createServiceToolStripMenuItem, Me.deleteServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.closeToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pierceItem, Me.Opacity2ToolStripMenuItem, Me.hideToolStripMenuItem, Me.ToolStripSeparator1, Me.createStartupToolStripMenuItem, Me.deleteStartupToolStripMenuItem, Me.ToolStripSeparator3, Me.createServiceToolStripMenuItem, Me.deleteServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.closeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(161, 148)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(185, 220)
         '
         'pierceItem
         '
         Me.pierceItem.BackColor = System.Drawing.SystemColors.Control
         Me.pierceItem.Name = "pierceItem"
-        Me.pierceItem.Size = New System.Drawing.Size(160, 22)
+        Me.pierceItem.Size = New System.Drawing.Size(184, 22)
         Me.pierceItem.Text = "鼠标穿透"
         '
         'Opacity2ToolStripMenuItem
         '
         Me.Opacity2ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem25, Me.ToolStripMenuItem50, Me.ToolStripMenuItem70, Me.ToolStripMenuItem85, Me.ToolStripMenuItem100})
         Me.Opacity2ToolStripMenuItem.Name = "Opacity2ToolStripMenuItem"
-        Me.Opacity2ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.Opacity2ToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.Opacity2ToolStripMenuItem.Text = "透明度"
         '
         'ToolStripMenuItem25
@@ -109,35 +112,35 @@ Partial Class Form1
         'hideToolStripMenuItem
         '
         Me.hideToolStripMenuItem.Name = "hideToolStripMenuItem"
-        Me.hideToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.hideToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.hideToolStripMenuItem.Text = "隐藏到托盘"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(157, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(181, 6)
         '
         'createServiceToolStripMenuItem
         '
         Me.createServiceToolStripMenuItem.Name = "createServiceToolStripMenuItem"
-        Me.createServiceToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.createServiceToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.createServiceToolStripMenuItem.Text = "注册自启动服务"
         '
         'deleteServiceToolStripMenuItem
         '
         Me.deleteServiceToolStripMenuItem.Name = "deleteServiceToolStripMenuItem"
-        Me.deleteServiceToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.deleteServiceToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.deleteServiceToolStripMenuItem.Text = "注销服务"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(157, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(181, 6)
         '
         'closeToolStripMenuItem
         '
         Me.closeToolStripMenuItem.Name = "closeToolStripMenuItem"
-        Me.closeToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.closeToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.closeToolStripMenuItem.Text = "关闭程序"
         '
         'Label1
@@ -206,6 +209,23 @@ Partial Class Form1
         Me.opacityToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.opacityToolStripMenuItem.Text = "透明度"
         '
+        'createStartupToolStripMenuItem
+        '
+        Me.createStartupToolStripMenuItem.Name = "createStartupToolStripMenuItem"
+        Me.createStartupToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.createStartupToolStripMenuItem.Text = "创建开始菜单启动项"
+        '
+        'deleteStartupToolStripMenuItem
+        '
+        Me.deleteStartupToolStripMenuItem.Name = "deleteStartupToolStripMenuItem"
+        Me.deleteStartupToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.deleteStartupToolStripMenuItem.Text = "删除开始菜单启动项"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(181, 6)
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -254,5 +274,7 @@ Partial Class Form1
     Friend WithEvents createServiceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents deleteServiceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
-
+    Friend WithEvents createStartupToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents deleteStartupToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
 End Class
