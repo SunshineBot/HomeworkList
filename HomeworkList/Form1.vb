@@ -55,9 +55,9 @@ Public Class Form1
             For Each str As String In My.Application.CommandLineArgs
                 Select Case str
                     Case "createService"
-                        createService()
+                        callCreateService()
                     Case "deleteService"
-                        deleteService()
+                        callDeleteService()
                     Case "createStartup"
                         createStartup()
                     Case "deleteStartup"
@@ -309,7 +309,15 @@ Public Class Form1
     End Sub
 
     Private Sub createServiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles createServiceToolStripMenuItem.Click
-        createService()
+        callCreateService()
+    End Sub
+
+    Private Sub callCreateService()
+        If checkDll() Then
+            createService()
+        Else
+            MsgBox("serviceControllerLibrary.dll不存在！", vbExclamation + vbOKOnly, "警告")
+        End If
     End Sub
 
     Private Sub runAsAdmin(arg As String)
@@ -324,10 +332,10 @@ Public Class Form1
     Private Sub createService()
         Try
             Dim ctrl As ServiceController = ServiceControllerExtension.CreateService(
-                "HwList",
-                "hwlist便笺的自启动服务，喵~",
-                Application.ExecutablePath(),
-                False)
+            "HwList",
+            "hwlist便笺的自启动服务，喵~",
+            Application.ExecutablePath(),
+            False)
             MsgBox("自启动服务注册成功！", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "提示")
         Catch ex As SystemException
             If ex.Message = "拒绝访问。" Then
@@ -344,7 +352,15 @@ Public Class Form1
     End Sub
 
     Private Sub deleteServiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles deleteServiceToolStripMenuItem.Click
-        deleteService()
+        callDeleteService()
+    End Sub
+
+    Private Sub callDeleteService()
+        If checkDll() Then
+            deleteService()
+        Else
+            MsgBox("serviceControllerLibrary.dll不存在！", vbExclamation + vbOKOnly, "警告")
+        End If
     End Sub
 
     Private Sub deleteService()
@@ -368,6 +384,10 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Function checkDll() As Boolean
+        Return File.Exists("serviceControllerLibrary.dll")
+    End Function
+
     Private Sub createStartupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles createStartupToolStripMenuItem.Click
         createStartup()
     End Sub
@@ -383,7 +403,7 @@ Public Class Form1
                 '.Arguments = "/?" '传递参数
                 .Description = "我是直接调用COM创建的非托管对象创建的快捷方式！"
                 '.Ic '调用dll资源内的图标，索引在第23个图标，问号帮助
-                .TargetPath = Application.StartupPath & "\HomeworkList.exe"
+                .TargetPath = Application.ExecutablePath()
                 .WindowStyle = vbNormalNoFocus '打开窗体的风格，正常无焦点
                 .WorkingDirectory = Application.StartupPath '工作路径
 
